@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Light Theme Palette */
+    --bg-primary: #FFFFFF;
+    --bg-secondary: #F8FAFC;
+    --bg-surface: #FFFFFF;
+    --bg-surface-elevated: #F1F5F9;
+    --text-primary: #0F172A;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --border-color: #E2E8F0;
+    --accent-blue: #2563EB;
+    --accent-cyan: #06B6D4;
+    --accent-glow: rgba(37, 99, 235, 0.12);
+  }
+
+  .dark {
+    /* Dark Theme Palette */
+    --bg-primary: #07090E;
+    --bg-secondary: #0D111A;
+    --bg-surface: #111724;
+    --bg-surface-elevated: #182030;
+    --text-primary: #F8FAFC;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --border-color: #1E293B;
+    --accent-blue: #3B82F6;
+    --accent-cyan: #22D3EE;
+    --accent-glow: rgba(59, 130, 246, 0.16);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Moving color light border for cards */
+@keyframes moving-border-light {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-moving-border {
+  animation: moving-border-light 8s linear infinite;
+}
+
+.animate-moving-border-fast {
+  animation: moving-border-light 5s linear infinite;
+}
+
+/* Card Smoke Reveal Animation:
+   0.0s - mostly hidden/blurred
+   0.2s - main surface starts forming
+   0.3s - border/light becomes visible
+   0.4s - content becomes sharp
+   0.5s - card completely visible and stable
+*/
+@keyframes smoke-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translateY(22px) scale(0.98);
+  }
+  30% {
+    opacity: 0.4;
+    filter: blur(8px);
+    transform: translateY(14px) scale(0.99);
+  }
+  60% {
+    opacity: 0.8;
+    filter: blur(3px);
+    transform: translateY(6px);
+  }
+  85% {
+    opacity: 0.95;
+    filter: blur(1px);
+    transform: translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-smoke-reveal {
+  animation: smoke-reveal 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Button pulse & ripple animations */
+@keyframes button-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+.btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 70%);
+  pointer-events: none;
+  animation: button-ripple 0.45s ease-out forwards;
+}
+
+/* Glassmorphism utility */
+.glass-header {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.glass-card {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Grid pattern */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+}
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
